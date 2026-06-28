@@ -1,0 +1,50 @@
+{
+  "name": "netjson-diagrams",
+  "version": "0.1.0",
+  "description": "Convert NetJSON documents (NetworkGraph, DeviceConfiguration, DeviceMonitoring, NetworkRoutes, NetworkCollection) into PlantUML deployment/component diagrams. Rust core compiled to WebAssembly, runs offline in Node and the browser.",
+  "license": "SEE LICENSE IN LICENSE.md",
+  "author": "Ari Ugwu <ari@thirteendelta.com>",
+  "homepage": "https://github.com/0x13d/netjson-diagrams#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/0x13d/netjson-diagrams.git",
+    "directory": "packages/netjson-diagrams"
+  },
+  "bugs": {
+    "url": "https://github.com/0x13d/netjson-diagrams/issues"
+  },
+  "keywords": [
+    "netjson",
+    "plantuml",
+    "network",
+    "topology",
+    "diagram",
+    "wasm"
+  ],
+  "type": "module",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "node": "./dist/index.node.js",
+      "default": "./dist/index.js"
+    }
+  },
+  "files": [
+    "dist",
+    "wasm",
+    "wasm-node",
+    "README.md",
+    "LICENSE.md"
+  ],
+  "scripts": {
+    "build:wasm": "cd ../.. && make wasm wasm-node",
+    "build:ts": "tsc",
+    "build": "npm run build:wasm && npm run build:ts",
+    "smoke": "node scripts/smoke.mjs"
+  },
+  "devDependencies": {
+    "typescript": "^5.0.0"
+  }
+}

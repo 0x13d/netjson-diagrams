@@ -1,0 +1,20 @@
+/target
+**/*.rs.bk
+Cargo.lock
+
+# WASM artifacts
+packages/netjson-diagrams/wasm/
+packages/netjson-diagrams/wasm-node/
+packages/netjson-diagrams/dist/
+
+# Node
+node_modules/
+
+# Build outputs
+/dist/
+apps/web/dist/
+apps/vscode-extension/dist/
+apps/vscode-extension/*.vsix
+
+# OS / editor
+.DS_Store

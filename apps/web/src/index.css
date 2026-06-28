@@ -1,0 +1,85 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+  }
+
+  body {
+    @apply font-sans bg-paper text-ink;
+    font-feature-settings: 'ss01', 'ss02', 'cv11';
+    background-image:
+      radial-gradient(1200px 600px at 50% -10%, rgba(138, 109, 59, 0.08), transparent 70%),
+      radial-gradient(800px 500px at 90% 110%, rgba(14, 15, 18, 0.06), transparent 70%);
+    background-attachment: fixed;
+  }
+
+  ::selection {
+    background: rgba(138, 109, 59, 0.22);
+    color: #0e0f12;
+  }
+}
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+  .text-pretty {
+    text-wrap: pretty;
+  }
+  .glass {
+    background: rgba(247, 244, 238, 0.72);
+    backdrop-filter: saturate(140%) blur(14px);
+    -webkit-backdrop-filter: saturate(140%) blur(14px);
+  }
+}
+
+/* Markdown rendering inside the Paper tab */
+.paper-body h1 {
+  @apply font-display text-3xl mt-0 mb-3 tracking-tightest;
+}
+.paper-body h2 {
+  @apply font-display text-2xl mt-8 mb-2 tracking-tight;
+}
+.paper-body h3 {
+  @apply text-lg font-medium mt-5 mb-1.5 text-ink;
+}
+.paper-body h4 {
+  @apply text-base font-medium mt-4 mb-1 text-inkSoft;
+}
+.paper-body p,
+.paper-body li {
+  @apply text-[15px] leading-[1.65];
+}
+.paper-body ul {
+  @apply list-disc pl-5 space-y-1 my-2;
+}
+.paper-body ul ul {
+  @apply list-[circle] pl-4 my-1;
+}
+.paper-body code {
+  @apply font-mono text-[13px] bg-paperDim px-1.5 py-0.5 rounded text-ink;
+}
+.paper-body pre {
+  @apply font-mono text-[12.5px] leading-[1.55] bg-paperDim border border-ink/10 rounded-md p-3 my-3 overflow-x-auto;
+}
+.paper-body pre code {
+  @apply bg-transparent px-0 py-0 text-ink;
+}
+.paper-body table {
+  @apply text-[14px] border-collapse my-3 w-full;
+}
+.paper-body th,
+.paper-body td {
+  @apply border border-ink/15 px-2.5 py-1.5 text-left align-top;
+}
+.paper-body th {
+  @apply bg-paperDim text-ink font-medium;
+}
+.paper-body em {
+  @apply text-inkSoft;
+}

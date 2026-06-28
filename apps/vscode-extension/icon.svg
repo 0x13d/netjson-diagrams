@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" width="256" height="256">
+  <!-- background plate matches elsa-to-mermaid's icon plate (paper tone) -->
+  <rect width="128" height="128" rx="22" fill="#F7F4EE"/>
+
+  <!-- subtle inner stroke for definition -->
+  <rect x="0.5" y="0.5" width="127" height="127" rx="21.5" fill="none" stroke="#0E0F12" stroke-opacity="0.08"/>
+
+  <!-- network mark: three nodes -->
+  <g fill="none" stroke="#0E0F12" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+    <!-- wired edges (solid) -->
+    <line x1="34" y1="46" x2="64" y2="84"/>
+    <line x1="94" y1="46" x2="64" y2="84"/>
+  </g>
+
+  <!-- wireless link between the two top nodes (dashed, accent colour) -->
+  <line x1="42" y1="40" x2="86" y2="40" stroke="#1F6FEB" stroke-width="3" stroke-linecap="round" stroke-dasharray="3 5"/>
+
+  <!-- nodes -->
+  <g fill="#F7F4EE" stroke="#0E0F12" stroke-width="3">
+    <circle cx="34" cy="40" r="11"/>
+    <circle cx="94" cy="40" r="11"/>
+    <circle cx="64" cy="92" r="11"/>
+  </g>
+</svg>

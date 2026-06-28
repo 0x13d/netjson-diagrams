@@ -1,0 +1,50 @@
+{
+  "type": "NetworkGraph",
+  "label": "Coffeeshop Mesh",
+  "protocol": "OLSR",
+  "version": "0.6.6",
+  "metric": "ETX",
+  "router_id": "10.0.0.1",
+  "topology_id": "topo-mesh-01",
+  "nodes": [
+    {
+      "id": "10.0.0.1",
+      "label": "Gateway",
+      "local_addresses": ["192.168.1.1"],
+      "properties": { "role": "router", "vendor": "Ubiquiti" }
+    },
+    {
+      "id": "10.0.0.2",
+      "label": "AP-North",
+      "properties": { "role": "ap" }
+    },
+    {
+      "id": "10.0.0.3",
+      "label": "AP-South",
+      "properties": { "role": "ap" }
+    }
+  ],
+  "links": [
+    {
+      "source": "10.0.0.1",
+      "target": "10.0.0.2",
+      "cost": 1.0,
+      "cost_text": "ETX 1.0",
+      "properties": { "protocol": "OLSR" }
+    },
+    {
+      "source": "10.0.0.1",
+      "target": "10.0.0.3",
+      "cost": 1.5,
+      "cost_text": "ETX 1.5",
+      "properties": { "protocol": "OLSR" }
+    },
+    {
+      "source": "10.0.0.2",
+      "target": "10.0.0.3",
+      "cost": 2.0,
+      "cost_text": "ETX 2.0",
+      "properties": { "protocol": "OLSR" }
+    }
+  ]
+}

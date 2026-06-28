@@ -1,0 +1,40 @@
+{
+  "type": "DeviceMonitoring",
+  "general": {
+    "hostname": "router-01",
+    "local_time": 1735689600,
+    "uptime": 432000
+  },
+  "resources": {
+    "load": [0.15, 0.12, 0.10],
+    "memory": { "total": 134217728, "free": 67108864, "buffered": 8388608 },
+    "swap":   { "total": 0, "free": 0 },
+    "disk":   { "total": 67108864, "used": 33554432 }
+  },
+  "interfaces": [
+    {
+      "name": "eth0",
+      "type": "ethernet",
+      "up": true,
+      "mac": "aa:bb:cc:dd:ee:f0",
+      "statistics": {
+        "rx_bytes": 1048576000,
+        "tx_bytes": 524288000,
+        "rx_packets": 1000000,
+        "tx_packets": 750000
+      }
+    },
+    {
+      "name": "wlan0",
+      "type": "wireless",
+      "up": true,
+      "mac": "aa:bb:cc:dd:ee:f1",
+      "statistics": {
+        "rx_bytes": 209715200,
+        "tx_bytes": 104857600,
+        "rx_packets": 350000,
+        "tx_packets": 280000
+      }
+    }
+  ]
+}

@@ -1,0 +1,42 @@
+{
+  "name": "netjson-diagrams-cli",
+  "version": "0.1.0",
+  "description": "Cross-platform CLI for converting NetJSON documents into PlantUML deployment/component diagrams. Ships a native Rust binary per platform.",
+  "license": "SEE LICENSE IN LICENSE.md",
+  "author": "Ari Ugwu <ari@thirteendelta.com>",
+  "homepage": "https://github.com/ariugwu/netjson-diagrams#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ariugwu/netjson-diagrams.git",
+    "directory": "packages/netjson-diagrams-cli"
+  },
+  "bugs": {
+    "url": "https://github.com/ariugwu/netjson-diagrams/issues"
+  },
+  "keywords": [
+    "netjson",
+    "plantuml",
+    "network",
+    "topology",
+    "diagram",
+    "cli"
+  ],
+  "bin": {
+    "netjson-diagrams": "bin/netjson-diagrams.js"
+  },
+  "files": [
+    "bin",
+    "README.md",
+    "LICENSE.md"
+  ],
+  "optionalDependencies": {
+    "netjson-diagrams-cli-darwin-x64": "0.1.0",
+    "netjson-diagrams-cli-darwin-arm64": "0.1.0",
+    "netjson-diagrams-cli-linux-x64-gnu": "0.1.0",
+    "netjson-diagrams-cli-linux-arm64-gnu": "0.1.0",
+    "netjson-diagrams-cli-win32-x64-msvc": "0.1.0"
+  },
+  "engines": {
+    "node": ">=18"
+  }
+}

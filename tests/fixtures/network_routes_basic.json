@@ -1,0 +1,27 @@
+{
+  "type": "NetworkRoutes",
+  "router_id": "10.0.0.1",
+  "routes": [
+    {
+      "destination": "0.0.0.0/0",
+      "next": "10.0.0.254",
+      "device": "eth0",
+      "cost": 1,
+      "source": "static"
+    },
+    {
+      "destination": "10.0.0.0/24",
+      "next": "0.0.0.0",
+      "device": "br-lan",
+      "cost": 0,
+      "source": "kernel"
+    },
+    {
+      "destination": "192.168.1.0/24",
+      "next": "10.0.0.2",
+      "device": "br-lan",
+      "cost": 2,
+      "source": "olsr"
+    }
+  ]
+}

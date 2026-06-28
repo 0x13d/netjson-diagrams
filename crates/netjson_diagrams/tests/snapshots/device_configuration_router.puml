@@ -1,0 +1,23 @@
+@startuml
+!include <tupadr3/font-awesome-6/circle_dot>
+!include <tupadr3/font-awesome-6/code_branch>
+!include <tupadr3/font-awesome-6/ethernet>
+!include <tupadr3/font-awesome-6/wifi>
+
+top to bottom direction
+title "Device · router-01"
+
+node "Device · router-01" as device {
+    component "lo" as iface_lo <<$circle_dot>>
+    component "eth0" as iface_eth0 <<$ethernet>>
+    component "wlan0" as iface_wlan0 <<$wifi>>
+    component "br-lan" as iface_br_lan <<$code_branch>>
+}
+
+component "Radio radio0" as radio_radio0 <<$wifi>>
+
+iface_br_lan ..> iface_eth0
+iface_br_lan ..> iface_wlan0
+iface_wlan0 ..> radio_radio0
+device .. radio_radio0
+@enduml

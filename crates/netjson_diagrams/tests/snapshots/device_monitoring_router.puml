@@ -1,0 +1,21 @@
+@startuml
+!include <tupadr3/font-awesome-6/ethernet>
+!include <tupadr3/font-awesome-6/wifi>
+
+top to bottom direction
+title "Monitoring · router-01"
+
+node "Device · router-01" as device {
+    component "eth0" as iface_eth0 <<$ethernet>>
+    component "wlan0" as iface_wlan0 <<$wifi>>
+}
+
+note right of iface_eth0
+  rx 1000.0 MB
+  tx 500.0 MB
+end note
+note right of iface_wlan0
+  rx 200.0 MB
+  tx 100.0 MB
+end note
+@enduml

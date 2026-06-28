@@ -1,0 +1,305 @@
+{
+  "type": "NetworkGraph",
+  "label": "PIV Issuance & Relying-Party Topology",
+  "protocol": "Logical",
+  "version": "FIPS 201-3",
+  "metric": "TrustPath",
+  "topology_id": "piv-issuance-01",
+  "router_id": "cms.piv.example.gov",
+  "nodes": [
+    {
+      "id": "ra.piv",
+      "label": "Registration Authority",
+      "properties": { "role": "ra", "domain": "issuance", "standards": "NIST SP 800-79" }
+    },
+    {
+      "id": "enroll.kiosk",
+      "label": "Enrollment Station",
+      "properties": { "role": "enrollment", "domain": "issuance", "captures": "fingerprints, facial image, I-9" }
+    },
+    {
+      "id": "idms.piv",
+      "label": "Identity Management System",
+      "properties": { "role": "idms", "domain": "issuance" }
+    },
+    {
+      "id": "cms.piv",
+      "label": "Card Management System",
+      "properties": { "role": "cms", "domain": "issuance", "standards": "FIPS 201-3, SP 800-73-4" }
+    },
+    {
+      "id": "ca.piv",
+      "label": "PIV Certificate Authority",
+      "properties": { "role": "ca", "domain": "pki", "policies": "id-fpki-common-authentication, -hardware, -cardAuth, -piv-contentSigning" }
+    },
+    {
+      "id": "hsm.piv",
+      "label": "Issuance HSM (FIPS 140-3 L3)",
+      "properties": { "role": "hsm", "domain": "pki" }
+    },
+    {
+      "id": "ldap.piv",
+      "label": "Cert Directory (LDAP)",
+      "properties": { "role": "directory", "domain": "pki", "publishes": "PIV-Auth, Digital Signature, Key Mgmt, Card-Auth certs" }
+    },
+    {
+      "id": "ocsp.piv",
+      "label": "OCSP Responder",
+      "properties": { "role": "ocsp", "domain": "pki" }
+    },
+    {
+      "id": "printer.piv",
+      "label": "PIV Card Personalization",
+      "properties": { "role": "printer", "domain": "issuance", "loads": "applets, topograph, CHUID, certs" }
+    },
+
+    {
+      "id": "pacs.headend",
+      "label": "PACS Head-End",
+      "properties": { "role": "pacs", "domain": "physical-access", "examples": "LenelS2, Genetec, AMAG" }
+    },
+    {
+      "id": "pacs.panel.b1",
+      "label": "Access Control Panel (Bldg-1)",
+      "properties": { "role": "pacs-panel", "domain": "physical-access" }
+    },
+    {
+      "id": "pacs.reader.lobby",
+      "label": "Lobby Door Reader",
+      "properties": { "role": "card-reader", "domain": "physical-access", "auth_mode": "PKI-CAK + PKI-AUTH" }
+    },
+
+    {
+      "id": "ad.dc",
+      "label": "Active Directory Domain Controller",
+      "properties": { "role": "directory", "domain": "logical-access", "function": "Kerberos PKINIT smart-card logon" }
+    },
+    {
+      "id": "workstation.1",
+      "label": "Desktop + Smart Card Reader",
+      "properties": { "role": "workstation", "domain": "logical-access", "middleware": "PIV PKCS#11 / minidriver" }
+    },
+    {
+      "id": "laptop.1",
+      "label": "Laptop + Smart Card Reader",
+      "properties": { "role": "laptop", "domain": "logical-access", "middleware": "PIV PKCS#11 / minidriver" }
+    },
+
+    {
+      "id": "dpc.issuer",
+      "label": "Derived PIV Credential Issuer",
+      "properties": { "role": "dpc-issuer", "domain": "mobile", "standards": "NIST SP 800-157, SP 800-217" }
+    },
+    {
+      "id": "mdm",
+      "label": "MDM / UEM",
+      "properties": { "role": "mdm", "domain": "mobile" }
+    },
+    {
+      "id": "mobile.1",
+      "label": "Mobile Device (DPC in SE/StrongBox)",
+      "properties": { "role": "mobile", "domain": "mobile", "key_store": "Secure Enclave / StrongBox / eSE" }
+    },
+
+    {
+      "id": "mail.server",
+      "label": "Mail Server",
+      "properties": { "role": "mail-server", "domain": "email", "examples": "Exchange, M365, Postfix" }
+    },
+    {
+      "id": "mail.client",
+      "label": "Mail Client (S/MIME)",
+      "properties": { "role": "mail-client", "domain": "email", "uses": "PIV Digital Signature + Key Management certs" }
+    }
+  ],
+  "links": [
+    {
+      "source": "enroll.kiosk",
+      "target": "ra.piv",
+      "cost": 1.0,
+      "cost_text": "biometrics + I-9 capture",
+      "properties": { "protocol": "HTTPS" }
+    },
+    {
+      "source": "ra.piv",
+      "target": "idms.piv",
+      "cost": 1.0,
+      "cost_text": "vetted identity record",
+      "properties": { "protocol": "TLS mTLS" }
+    },
+    {
+      "source": "idms.piv",
+      "target": "cms.piv",
+      "cost": 1.0,
+      "cost_text": "approved enrollment",
+      "properties": { "protocol": "TLS mTLS" }
+    },
+
+    {
+      "source": "cms.piv",
+      "target": "ca.piv",
+      "cost": 1.0,
+      "cost_text": "CMC cert request (4 PIV certs)",
+      "properties": { "protocol": "CMC over HTTPS" }
+    },
+    {
+      "source": "ca.piv",
+      "target": "hsm.piv",
+      "cost": 1.0,
+      "cost_text": "sign with CA key",
+      "properties": { "protocol": "PKCS#11" }
+    },
+    {
+      "source": "ca.piv",
+      "target": "ldap.piv",
+      "cost": 1.0,
+      "cost_text": "publish certs + CRL",
+      "properties": { "protocol": "LDAP / LDAPS" }
+    },
+    {
+      "source": "ca.piv",
+      "target": "ocsp.piv",
+      "cost": 1.0,
+      "cost_text": "delegate revocation status",
+      "properties": { "protocol": "OCSP signer trust" }
+    },
+
+    {
+      "source": "cms.piv",
+      "target": "printer.piv",
+      "cost": 1.0,
+      "cost_text": "personalize card (applets, CHUID, certs)",
+      "properties": { "protocol": "GlobalPlatform SCP03" }
+    },
+
+    {
+      "source": "cms.piv",
+      "target": "pacs.headend",
+      "cost": 1.0,
+      "cost_text": "provision FASC-N / Card UUID",
+      "properties": { "protocol": "PACS provisioning API" }
+    },
+    {
+      "source": "pacs.headend",
+      "target": "pacs.panel.b1",
+      "cost": 1.0,
+      "cost_text": "access decisions + ACL sync",
+      "properties": { "protocol": "IP (TLS)" }
+    },
+    {
+      "source": "pacs.panel.b1",
+      "target": "pacs.reader.lobby",
+      "cost": 1.0,
+      "cost_text": "PKI-CAK challenge at the door",
+      "properties": { "protocol": "OSDP v2 Secure Channel" }
+    },
+    {
+      "source": "pacs.headend",
+      "target": "ocsp.piv",
+      "cost": 1.0,
+      "cost_text": "cert path & revocation check",
+      "properties": { "protocol": "OCSP" }
+    },
+
+    {
+      "source": "workstation.1",
+      "target": "ad.dc",
+      "cost": 1.0,
+      "cost_text": "smart-card logon",
+      "properties": { "protocol": "Kerberos PKINIT" }
+    },
+    {
+      "source": "laptop.1",
+      "target": "ad.dc",
+      "cost": 1.0,
+      "cost_text": "smart-card logon",
+      "properties": { "protocol": "Kerberos PKINIT" }
+    },
+    {
+      "source": "ad.dc",
+      "target": "ldap.piv",
+      "cost": 1.0,
+      "cost_text": "NTAuth trust + user cert mapping",
+      "properties": { "protocol": "LDAP" }
+    },
+    {
+      "source": "ad.dc",
+      "target": "ocsp.piv",
+      "cost": 1.0,
+      "cost_text": "PIV-Auth cert validation",
+      "properties": { "protocol": "OCSP" }
+    },
+
+    {
+      "source": "cms.piv",
+      "target": "dpc.issuer",
+      "cost": 1.0,
+      "cost_text": "PIV-based identity proof (SP 800-157)",
+      "properties": { "protocol": "TLS mTLS" }
+    },
+    {
+      "source": "dpc.issuer",
+      "target": "ca.piv",
+      "cost": 1.0,
+      "cost_text": "DPC cert request",
+      "properties": { "protocol": "CMC over HTTPS" }
+    },
+    {
+      "source": "dpc.issuer",
+      "target": "mdm",
+      "cost": 1.0,
+      "cost_text": "DPC provisioning handoff",
+      "properties": { "protocol": "SCEP / vendor API" }
+    },
+    {
+      "source": "mdm",
+      "target": "mobile.1",
+      "cost": 1.0,
+      "cost_text": "install DPC into secure element",
+      "properties": { "protocol": "MDM agent over TLS" }
+    },
+    {
+      "source": "mobile.1",
+      "target": "ocsp.piv",
+      "cost": 1.0,
+      "cost_text": "DPC revocation check",
+      "properties": { "protocol": "OCSP" }
+    },
+
+    {
+      "source": "workstation.1",
+      "target": "mail.client",
+      "cost": 1.0,
+      "cost_text": "S/MIME signing via PIV slot 9C",
+      "properties": { "protocol": "PKCS#11 / CAPI" }
+    },
+    {
+      "source": "mail.client",
+      "target": "mail.server",
+      "cost": 1.0,
+      "cost_text": "signed (and optionally encrypted) message",
+      "properties": { "protocol": "SMTP + S/MIME (CMS)" }
+    },
+    {
+      "source": "mail.server",
+      "target": "ldap.piv",
+      "cost": 1.0,
+      "cost_text": "fetch recipient Key-Management cert",
+      "properties": { "protocol": "LDAP" }
+    },
+    {
+      "source": "mail.client",
+      "target": "ocsp.piv",
+      "cost": 1.0,
+      "cost_text": "validate signer cert",
+      "properties": { "protocol": "OCSP" }
+    },
+    {
+      "source": "mobile.1",
+      "target": "mail.server",
+      "cost": 1.0,
+      "cost_text": "S/MIME signing via DPC",
+      "properties": { "protocol": "SMTP + S/MIME (CMS)" }
+    }
+  ]
+}

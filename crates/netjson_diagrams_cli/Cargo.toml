@@ -1,0 +1,20 @@
+[package]
+name = "netjson-diagrams-cli"
+description = "Command-line tool that converts NetJSON documents into PlantUML deployment/component diagrams."
+version.workspace = true
+edition.workspace = true
+license-file.workspace = true
+authors.workspace = true
+repository.workspace = true
+homepage.workspace = true
+keywords.workspace = true
+categories.workspace = true
+readme = "../../README.md"
+
+[[bin]]
+name = "netjson-diagrams"
+path = "src/main.rs"
+
+[dependencies]
+netjson_diagrams = { version = "0.1.0", path = "../netjson_diagrams" }
+clap = { version = "4", features = ["derive"] }

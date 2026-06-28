@@ -1,0 +1,136 @@
+{
+  "name": "netjson-diagrams",
+  "displayName": "NetJSON Diagrams",
+  "description": "Preview NetJSON documents (NetworkGraph, DeviceConfiguration, DeviceMonitoring, NetworkRoutes, NetworkCollection) as PlantUML deployment/component diagrams plus an auto-generated paper, side by side with the editor.",
+  "version": "0.1.0",
+  "publisher": "0x13d",
+  "license": "SEE LICENSE IN LICENSE.md",
+  "author": "Ari Ugwu <ari@thirteendelta.com>",
+  "homepage": "https://github.com/ariugwu/netjson-diagrams#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ariugwu/netjson-diagrams.git",
+    "directory": "apps/vscode-extension"
+  },
+  "bugs": {
+    "url": "https://github.com/ariugwu/netjson-diagrams/issues"
+  },
+  "engines": {
+    "vscode": "^1.90.0"
+  },
+  "categories": [
+    "Visualization",
+    "Other"
+  ],
+  "keywords": [
+    "netjson",
+    "plantuml",
+    "network",
+    "topology",
+    "diagram"
+  ],
+  "icon": "media/icon.png",
+  "main": "./dist/extension.js",
+  "activationEvents": [
+    "onLanguage:json"
+  ],
+  "contributes": {
+    "commands": [
+      {
+        "command": "netjsonDiagrams.openPreview",
+        "title": "Open PlantUML Preview",
+        "category": "NetJSON Diagrams",
+        "icon": "$(open-preview)"
+      },
+      {
+        "command": "netjsonDiagrams.openPreviewToSide",
+        "title": "Open PlantUML Preview to the Side",
+        "category": "NetJSON Diagrams",
+        "icon": "$(open-preview)"
+      },
+      {
+        "command": "netjsonDiagrams.exportCombined",
+        "title": "Export Combined Paper (.md)",
+        "category": "NetJSON Diagrams"
+      },
+      {
+        "command": "netjsonDiagrams.exportPlantuml",
+        "title": "Export PlantUML (.puml)",
+        "category": "NetJSON Diagrams"
+      },
+      {
+        "command": "netjsonDiagrams.exportPaper",
+        "title": "Export Paper (.md)",
+        "category": "NetJSON Diagrams"
+      }
+    ],
+    "menus": {
+      "editor/title": [
+        {
+          "when": "netjsonDiagrams.isNetjson",
+          "command": "netjsonDiagrams.openPreviewToSide",
+          "group": "navigation"
+        }
+      ],
+      "commandPalette": [
+        {
+          "command": "netjsonDiagrams.openPreview",
+          "when": "editorLangId == json"
+        },
+        {
+          "command": "netjsonDiagrams.openPreviewToSide",
+          "when": "editorLangId == json"
+        },
+        {
+          "command": "netjsonDiagrams.exportCombined",
+          "when": "editorLangId == json"
+        },
+        {
+          "command": "netjsonDiagrams.exportPlantuml",
+          "when": "editorLangId == json"
+        },
+        {
+          "command": "netjsonDiagrams.exportPaper",
+          "when": "editorLangId == json"
+        }
+      ]
+    },
+    "configuration": {
+      "title": "NetJSON Diagrams",
+      "properties": {
+        "netjsonDiagrams.defaultDirection": {
+          "type": "string",
+          "enum": [
+            "TD",
+            "LR"
+          ],
+          "default": "TD",
+          "description": "Default layout direction for the PlantUML preview."
+        },
+        "netjsonDiagrams.previewDebounceMs": {
+          "type": "number",
+          "default": 200,
+          "minimum": 0,
+          "maximum": 2000,
+          "description": "Milliseconds to debounce preview updates while editing."
+        }
+      }
+    }
+  },
+  "scripts": {
+    "build:wasm": "node scripts/copy-wasm.mjs",
+    "build:extension": "node esbuild.config.mjs",
+    "build:webview": "node esbuild.config.mjs --webview",
+    "build": "npm run build:wasm && npm run build:extension && npm run build:webview",
+    "watch": "node esbuild.config.mjs --watch",
+    "package": "npm run build && vsce package --no-dependencies",
+    "vscode:prepublish": "npm run build"
+  },
+  "devDependencies": {
+    "@types/node": "^20.17.0",
+    "@types/vscode": "^1.90.0",
+    "@vscode/vsce": "^3.2.1",
+    "esbuild": "^0.24.0",
+    "typescript": "^5.7.3"
+  }
+}

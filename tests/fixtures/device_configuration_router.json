@@ -1,0 +1,62 @@
+{
+  "type": "DeviceConfiguration",
+  "general": {
+    "hostname": "router-01",
+    "description": "OpenWRT gateway for the lab"
+  },
+  "interfaces": [
+    {
+      "name": "lo",
+      "type": "loopback",
+      "addresses": [
+        { "address": "127.0.0.1", "mask": 8, "family": "ipv4", "proto": "static" }
+      ]
+    },
+    {
+      "name": "eth0",
+      "type": "ethernet",
+      "mac": "aa:bb:cc:dd:ee:f0",
+      "mtu": 1500,
+      "autostart": true,
+      "addresses": [
+        { "address": "192.168.1.1", "mask": 24, "family": "ipv4", "proto": "static" }
+      ]
+    },
+    {
+      "name": "wlan0",
+      "type": "wireless",
+      "mac": "aa:bb:cc:dd:ee:f1",
+      "mtu": 1500,
+      "autostart": true,
+      "wireless": {
+        "radio": "radio0",
+        "mode": "access_point",
+        "ssid": "LabMesh",
+        "encryption": { "protocol": "wpa2_personal", "ciphers": ["ccmp"] }
+      }
+    },
+    {
+      "name": "br-lan",
+      "type": "bridge",
+      "mtu": 1500,
+      "autostart": true,
+      "bridge_members": ["eth0", "wlan0"],
+      "addresses": [
+        { "address": "10.0.0.1", "mask": 24, "family": "ipv4", "proto": "static" }
+      ]
+    }
+  ],
+  "radios": [
+    {
+      "name": "radio0",
+      "protocol": "802.11n",
+      "channel": 6,
+      "channel_width": 20,
+      "tx_power": 17,
+      "country": "US",
+      "disabled": false
+    }
+  ],
+  "dns_servers": ["8.8.8.8", "1.1.1.1"],
+  "dns_search": ["lan"]
+}

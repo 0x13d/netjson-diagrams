@@ -1,0 +1,15 @@
+@startuml
+!include <C4/C4_Container>
+
+top to bottom direction
+LAYOUT_WITH_LEGEND()
+title "Coffeeshop Mesh"
+
+Container(n_10_0_0_1, "Gateway", "Router", "vendor: Ubiquiti")
+Container(n_10_0_0_2, "AP-North", "AP")
+Container(n_10_0_0_3, "AP-South", "AP")
+
+Rel(n_10_0_0_1, n_10_0_0_2, "ETX 1.0", "OLSR")
+Rel(n_10_0_0_1, n_10_0_0_3, "ETX 1.5", "OLSR")
+Rel(n_10_0_0_2, n_10_0_0_3, "ETX 2.0", "OLSR")
+@enduml
